@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.19.3",
+    "antd": "^4.23.4",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "next": "12.3.1",
+    "normalize-css": "^2.3.1",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-bootstrap": "^2.5.0",
+    "react-dom": "18.2.0",
+    "react-indiana-drag-scroll": "^2.2.0",
+    "react-is": "^18.2.0",
+    "styled-components": "^5.3.6",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
     "eslint": "8.25.0",
