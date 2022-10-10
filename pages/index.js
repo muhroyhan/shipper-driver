@@ -5,23 +5,13 @@ import Header from '../components/header'
 import ShipperDrawer from '../components/drawer'
 import Content from '../components/content'
 import styled from 'styled-components'
+import isEmpty from 'lodash/isEmpty'
 
 const HomeComp = styled.div`
   height: 100vh;
 `
 
-const BodyComp = styled.div`
-  display: flex;
-
-  .drawer {
-    flex-grow: 1;
-  }
-  .content {
-    flex-grow: 3;
-  }
-`
-
-const Home = ({ drivers }) => {
+const Home = () => {
   return (
     <HomeComp>
       <Head>
@@ -30,23 +20,12 @@ const Home = ({ drivers }) => {
         <link rel="icon" href="/shipper-icon.png" />
       </Head>
       <Header/>      
-      <BodyComp>
-        <div className='drawer'><ShipperDrawer/></div>
-        <div className='content'><Content drivers={drivers}/></div>
-      </BodyComp>
+      <Row>
+        <Col span={5}><ShipperDrawer/></Col>
+        <Col span={19}><Content/></Col>
+      </Row>
     </HomeComp>
   )
-}
-
-// server-side rentdering function
-// This gets called on every request
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://randomuser.me/api/?page=1&results=5`)
-  const data = await res.json()
-
-  // Pass data to the page via props
-  return { props: { drivers: data.results } }
 }
 
 export default Home

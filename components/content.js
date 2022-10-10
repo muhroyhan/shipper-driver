@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import colors from '../constants/colors'
-import { map } from 'lodash'
+import { isEmpty, map } from 'lodash'
 import ProfileCard from './profile_card'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { Col, Row, Button, message, Space, Input } from 'antd'
 import { LeftOutlined, RightOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons'
+import { useRouter } from 'next/router'
+import { PAGE_LOCALSTORAGE_KEY } from '../constants/constants'
 
 const HeaderComp = styled(Row)`
     background-color: ${colors.shipperWhite};
@@ -58,14 +60,48 @@ const SearchAddCol = styled(Col)`
     font-size: 16px;
 `
 
-function Content(props) {
-    const { drivers } = props
+function Content() {
+    const router = useRouter()
+    const [page, setPage] = useState(0)
+    const [drivers, setDrivers] = useState([])
 
+    useEffect(() => {
+        const savedPage = parseInt(localStorage.getItem(PAGE_LOCALSTORAGE_KEY))
+        if(savedPage) {
+            setPage(savedPage)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (page > 0) {
+            localStorage.setItem(PAGE_LOCALSTORAGE_KEY, parseInt(page))
+    
+            const fetchDrivers = async () => {
+                const queryJson = { page, results: 5, seed: 'abc' }
+                router.push({ query: queryJson }, undefined, { shallow: true })
+                const queries = new URLSearchParams(queryJson).toString()
+                const url = `https://randomuser.me/api/?${queries}`
+              
+                // Fetch data from external API
+                const res = await fetch(url)
+                const data = await res.json()
+                setDrivers(data.results)
+            }
+    
+            fetchDrivers()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page])
+
+    const handleChangePage = (currPage) =>  {
+        setPage(currPage)
+    }
+    
     return (
         <ContentComp>
             <HeaderComp justify='space-between'>
                 <Col>
-                    <div className='title'>DEVICE MANAGEMENT</div>
+                    <div className='title'>DRIVER MANAGEMENT</div>
                     <div className='desc'>Data driver yang bekerja dengan anda</div>
                 </Col>
                 <SearchAddCol>
@@ -85,20 +121,20 @@ function Content(props) {
             </ScrollComp>
             <SwitchPageComp size='large'>
                 <Space size='large'>
-                    <Button type='text' onClick={() => {
-                        message.info('previous')
-                    }} ><LeftOutlined/> Previous Page </Button>
-                    <Button type='text' onClick={() => {
-                        message.info('next')
-                    }} >Next Page <RightOutlined/> </Button>
+                    <Button disabled={page === 1} type='text' onClick={() =>
+                        handleChangePage(page === 1 ? 1 : page - 1)
+                    }>
+                        <LeftOutlined/> Previous Page
+                    </Button>
+                    <Button type='text' onClick={() =>
+                        handleChangePage(page + 1)
+                    } >
+                        Next Page <RightOutlined/>
+                    </Button>
                 </Space>
             </SwitchPageComp>
         </ContentComp>
     )
-}
-
-Content.propTypes = {
-    drivers: PropTypes.array
 }
 
 export default Content
