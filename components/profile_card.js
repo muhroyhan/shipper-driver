@@ -17,7 +17,7 @@ const ProfileCardComp = styled.div`
 const DriverIdSec = styled(Row)`
     padding: 10px 20px;
 
-    section > span {
+    .ant-col > .driver-id {
         color: ${colors.shipperRed};
     }
 `
@@ -61,7 +61,7 @@ const ProfileCard = (props) => {
         <ProfileCardComp>
             <DriverIdSec justify='space-between'>
                 <Col>
-                    Driver ID: <span>{id.value}</span>
+                    Driver ID: <span className='driver-id'>{id.value}</span>
                 </Col>
                 <Col>
                     <EllipsisOutlined />

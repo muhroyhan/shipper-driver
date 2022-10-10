@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import isEmpty from 'lodash/isEmpty'
 
 const HomeComp = styled.div`
-  height: 100vh;
+  height: 100%;
 `
 
 const Home = () => {

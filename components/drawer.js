@@ -11,7 +11,7 @@ const MenuComp = styled(Space)`
 const DrawerComp = styled.div`
     padding: 20px;
     position: sticky;
-    height: 85vh;
+    height: 80vh;
 `
 
 function ShipperDrawer() {

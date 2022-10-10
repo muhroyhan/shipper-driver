@@ -1,3 +1,3 @@
 module.exports = {
-    PAGE_LOCALSTORAGE_KEY: 'page_key'
+    DRIVER_QUERY_STORAGEKEY: 'driver-query'
 }
