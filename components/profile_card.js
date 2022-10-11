@@ -12,7 +12,7 @@ import { mobileWidth } from '../constants/constants';
 const ProfileCardComp = styled.div`
     min-width: 280px;
     margin: 0 20px;
-    @media (max-width: 768px) {
+    @media (max-width: ${props => props.$currMobWidth}px) {
         margin: 0;
     }
     @media (max-width: 425px) {
@@ -55,6 +55,15 @@ const DetailSection = styled.div`
     }
 `
 
+const DetailDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @media (max-width: ${props => props.$currMobWidth}px) {
+        flex-direction: row;
+    }
+`
+
 const detailRowSection = ({ title = '', value = '' }) => {
     return <DetailSection>
         <div className='title' >{title}</div>
@@ -70,7 +79,7 @@ const ProfileCard = (props) => {
 
     return (
         <ProfileCardComp
-            $isDesktopWidth={isDesktopWidth}
+            $currMobWidth={mobileWidth}
         >
             <DriverIdSec justify='space-between'>
                 <Col>
@@ -81,25 +90,31 @@ const ProfileCard = (props) => {
                 </Col>
             </DriverIdSec>
             <DividerComp/>
-            <ProfileCardSec>
-                <ImageComp src={picture.medium} alt='Profile User' preview={false}/>
-            </ProfileCardSec>
-            {detailRowSection({
-                title: 'Nama Driver',
-                value: `${name.title}. ${name.first} ${name.last}`
-            })}
-            {detailRowSection({
-                title: 'Telepon',
-                value: profile.phone
-            })}
-            {detailRowSection({
-                title: 'Email',
-                value: profile.email
-            })}
-            {detailRowSection({
-                title: 'Tanggal Lahir',
-                value: moment(dob.date).format('DD-MM-YYYY')
-            })}
+            <DetailDiv
+                $currMobWidth={mobileWidth}
+            >
+                <ProfileCardSec>
+                    <ImageComp src={picture.medium} alt='Profile User' preview={false}/>
+                </ProfileCardSec>
+                <div>
+                {detailRowSection({
+                    title: 'Nama Driver',
+                    value: `${name.first} ${name.last}`
+                })}
+                {detailRowSection({
+                    title: 'Telepon',
+                    value: profile.phone
+                })}
+                {isDesktopWidth && detailRowSection({
+                    title: 'Email',
+                    value: profile.email
+                })}
+                {isDesktopWidth && detailRowSection({
+                    title: 'Tanggal Lahir',
+                    value: moment(dob.date).format('DD-MM-YYYY')
+                })}
+                </div>
+            </DetailDiv>
         </ProfileCardComp>
     )
 }

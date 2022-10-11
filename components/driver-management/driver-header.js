@@ -24,6 +24,7 @@ const HeaderComp = styled.div`
     > div:first-child {
         flex: 4;
         line-height: 1.3;
+        text-align: left;
     }
     > div:nth-child(2) {
         flex: 1;

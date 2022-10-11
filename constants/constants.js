@@ -1,5 +1,6 @@
 import { HomeFilled, CalendarOutlined } from '@ant-design/icons';
 import Image from 'next/image';
+import styled from 'styled-components';
 import DriverManagement from '../components/driver-management/driver-management';
 
 export const DRIVER_QUERY_STORAGEKEY = 'driver-query'
@@ -7,14 +8,17 @@ export const FIRST_PAGE_PATH = '/dashboard'
 export const SECOND_PAGE_PATH = '/driver-management'
 export const THIRD_PAGE_PATH = '/pickup'
 
-export const mobileWidth = 758
+export const mobileWidth = 768
+
+const ContentDiv = styled.div`
+`
 
 export const menuTabs = (pathSelected) => [
     {
         icon: <HomeFilled />,
         label: 'Beranda',
         path: FIRST_PAGE_PATH,
-        content: <div>Dashboard</div>
+        content: <ContentDiv>Dashboard</ContentDiv>
     },
     {
         icon: <Image 
@@ -35,6 +39,6 @@ export const menuTabs = (pathSelected) => [
         icon: <CalendarOutlined />,
         label: 'Pickup',
         path: THIRD_PAGE_PATH,
-        content: <div>Pickup</div>
+        content: <ContentDiv>Pickup</ContentDiv>
     }
 ]

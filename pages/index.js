@@ -7,9 +7,21 @@ import { map } from 'lodash'
 import { menuTabs, mobileWidth, SECOND_PAGE_PATH } from '../constants/constants'
 import colors from '../constants/colors'
 import useWindowWide from '../utility/user-window-wide'
-import { TabListDiv } from '../styles/global.styled-components'
 import MobileContent from '../components/mobile-content'
 import MobileDrawer from '../components/mobile-drawer'
+
+const TabListDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .anticon {
+        margin-right: 0;
+    }
+    .label {
+        margin-left: 10px;
+    }
+`
 
 const HomeComp = styled.div`
   height: 100%;
@@ -26,6 +38,10 @@ const ShipperTabs = styled(Tabs)`
 
     .ant-tabs-tabpane {
       padding: 0 !important;
+      text-align: center;
+      vertical-align: middle;
+      
+      min-height: 89vh;
     }
 
     .ant-tabs-nav {
@@ -57,7 +73,7 @@ const Home = () => {
       label: (
           <TabListDiv>
               {tab.icon}
-              <span>{tab.label}</span>
+              <span className='label'>{tab.label}</span>
           </TabListDiv>
       ),
       key: tab.path,
@@ -66,8 +82,6 @@ const Home = () => {
   })
 
   const isDesktopWidth = useWindowWide(mobileWidth)
-
-  const handleOpenDrawer = (drawerStatus) => setIsOpen(drawerStatus)
   
   return (
     <HomeComp>
@@ -81,7 +95,12 @@ const Home = () => {
         isOpen={isOpen}
       />
       {!isDesktopWidth &&
-          <MobileDrawer path={path} isOpen={isOpen} setIsOpen={setIsOpen}/>
+          <MobileDrawer 
+             path={path}
+             isOpen={isOpen}
+             setIsOpen={setIsOpen}
+             handleChangeContent={handleChangeContent}
+          />
       }
       {!isDesktopWidth &&
           <MobileContent path={path} />

@@ -14,7 +14,6 @@ import useWindowWide from '../../utility/user-window-wide'
 const ScrollComp = styled(ScrollContainer)`
     background-color: ${colors.shipperBackGrey};
     white-space: nowrap;
-    padding-bottom: 20px;
     cursor: grab;
 
     &:active {
@@ -24,11 +23,16 @@ const ScrollComp = styled(ScrollContainer)`
 
 const SwitchPageComp = styled.div`
     text-align: center;
-    padding-bottom: 20px;
+    margin: 10px 0;
 
     .ant-btn{
         background: transparent;
-        font-size: 20px;
+        @media (min-width: 769px) {
+            font-size: 20px;
+        }
+        @media (max-width: ${props => props.$currMobWidth}px) {
+            font-size: 14px;
+        }
     }
 `
 
@@ -44,6 +48,15 @@ const MobileScrollComp = styled.div`
         flex-wrap: no-wrap;
     }
     gap: 10px;
+`
+
+const MainFragment = styled.div`
+    max-width: 100%;
+    display: block;
+    @media (max-width: ${props => props.$currMobWidth}px) {
+        max-width: 320px;
+        display: inline-block;
+    }
 `
 
 function DriverManagement() {
@@ -76,7 +89,7 @@ function DriverManagement() {
         if (!isEmpty(drivers)) {
             const currQuery = router.query
             if(!isEmpty(currQuery)) {
-                setPage(currQuery.page || 1)
+                setPage(parseInt(currQuery.page) || 1)
                 setSearch(currQuery.search || '')
             } else {
                 setPage(1)
@@ -128,7 +141,7 @@ function DriverManagement() {
 
     //func to handle next and prev page buttons
     const handleChangePage = (currPage) =>  {
-        setPage(currPage)
+        setPage(parseInt(currPage))
     }
 
     //handle search driver from input box
@@ -137,9 +150,11 @@ function DriverManagement() {
     }
 
     const isDesktopWidth = useWindowWide(mobileWidth)
-    
+    console.log(page)
     return (
-        <Fragment>
+        <MainFragment
+            $currMobWidth={mobileWidth}
+        >
             <DriverHeader
                 onSearch={handleSearchDriver}
             />
@@ -153,7 +168,10 @@ function DriverManagement() {
                     {map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)}
                 </MobileScrollComp>
             }
-            <SwitchPageComp size='large'>
+            <SwitchPageComp
+                $currMobWidth={mobileWidth}
+                size='large'
+            >
                 <Space size='large'>
                     <Button
                         disabled={page === 1} 
@@ -171,7 +189,7 @@ function DriverManagement() {
                     </Button>
                 </Space>
             </SwitchPageComp>
-        </Fragment>
+        </MainFragment>
     )
 }
 

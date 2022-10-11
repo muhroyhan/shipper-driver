@@ -3,15 +3,42 @@ import { map } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { menuTabs } from '../constants/constants'
-import { TabListDiv } from '../styles/global.styled-components'
 import styled from 'styled-components'
+import colors from '../constants/colors'
 
 const EmptyHeaderDiv = styled.div`
     height: 60px;
 `
 
+const TabListDiv = styled.div`
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    ${(props) => {
+        if (props.$isPathSelected) {
+            return `
+                > span {
+                    color: ${colors.shipperRed}
+                }
+            `
+        }
+        return ''
+    }}
+    
+    .label {
+        ${(props) => {
+            if (props.$isPathSelected) {
+                return `color: ${colors.shipperRed};`
+            }
+            return ''
+        }}
+        margin-left: 10px;
+    }
+
+`
+
 const MobileDrawer = (props) => {
-    const { path = '', isOpen = false, setIsOpen } = props
+    const { path = '', isOpen = false, setIsOpen, handleChangeContent } = props
     
     return (
         <Drawer
@@ -23,9 +50,16 @@ const MobileDrawer = (props) => {
         >
             <EmptyHeaderDiv/>
             {map(menuTabs(path), (tab, key) => {
-                return <TabListDiv key={key}>
+                return <TabListDiv 
+                    key={key}
+                    $isPathSelected={path === tab.path}
+                    onClick={() => {
+                        setIsOpen(false)
+                        handleChangeContent(tab.path)
+                    }}
+                >
                     {tab.icon}
-                    <span>{tab.label}</span>
+                    <span className='label'>{tab.label}</span>
                 </TabListDiv>
             })}
         </Drawer>
@@ -35,7 +69,8 @@ const MobileDrawer = (props) => {
 MobileDrawer.propTypes = {
     isOpen: PropTypes.bool,
     path: PropTypes.string,
-    setIsOpen: PropTypes.func
+    setIsOpen: PropTypes.func,
+    handleChangeContent: PropTypes.func
 }
 
 export default MobileDrawer
