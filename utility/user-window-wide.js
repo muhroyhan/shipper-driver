@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 
+//utility to get boolean if current screen is desktop screen
+//depend on "size" that user send
 const useWindowWide = (size) => {
     const [width, setWidth] = useState(0)
     

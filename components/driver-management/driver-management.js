@@ -32,6 +32,20 @@ const SwitchPageComp = styled.div`
     }
 `
 
+const MobileScrollComp = styled.div`
+    display: flex;
+    margin: 0 20px;
+    @media (min-width: 426px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    @media (max-width: 425px) {
+        flex-direction: column;
+        flex-wrap: no-wrap;
+    }
+    gap: 10px;
+`
+
 function DriverManagement() {
     const pageSize = 5
     const router = useRouter()
@@ -60,15 +74,16 @@ function DriverManagement() {
     //initial state after fetching driver data
     useEffect(() => {
         if (!isEmpty(drivers)) {
-            const driverQuery = JSON.parse(localStorage.getItem(DRIVER_QUERY_STORAGEKEY))
-            if(!isEmpty(driverQuery)) {
-                setPage(driverQuery.page || 1)
-                setSearch(driverQuery.search || '')
+            const currQuery = router.query
+            if(!isEmpty(currQuery)) {
+                setPage(currQuery.page || 1)
+                setSearch(currQuery.search || '')
             } else {
                 setPage(1)
                 setSearch('')
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [drivers])
 
     useEffect(() => {
@@ -97,8 +112,6 @@ function DriverManagement() {
             if (page > 0) {
                 newShowedDrivers = handlePagination(newShowedDrivers, page)
             }
-            // put page value / search value to url query and localStorage
-            localStorage.setItem(DRIVER_QUERY_STORAGEKEY, JSON.stringify(queryJson))
             router.push({ query: queryJson }, undefined, { shallow: true })
             // update drivers to show
             setShowedDrivers(newShowedDrivers)
@@ -136,7 +149,9 @@ function DriverManagement() {
                 </ScrollComp>
             }
             {!isDesktopWidth &&
-                map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)
+               <MobileScrollComp>
+                    {map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)}
+                </MobileScrollComp>
             }
             <SwitchPageComp size='large'>
                 <Space size='large'>

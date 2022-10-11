@@ -7,21 +7,9 @@ import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import { DRIVER_QUERY_STORAGEKEY, mobileWidth } from '../../constants/constants'
 import { isEmpty } from 'lodash'
 import useWindowWide from '../../utility/user-window-wide'
+import { useRouter } from 'next/router'
 
-const HeaderComp = styled(Row)`
-    background-color: ${colors.shipperWhite};
-    margin: 20px 40px;
-    padding: 10px 20px;
-    height: 10vh;
-
-    .title {
-        font-size: 3vh;
-        color: ${colors.shipperRed};
-        font-weight: bold;
-    }
-`
-
-const HeaderComp2 = styled.div`
+const HeaderComp = styled.div`
     background-color: ${colors.shipperWhite};
     padding: 20px;
     margin: 20px;
@@ -58,34 +46,27 @@ const HeaderComp2 = styled.div`
     }
 `
 
-const SearchAddCol = styled(Col)`
-    display: flex;
-    padding: 8px 0;
-    gap: 10px;
-    align-items: stretch;
-    font-size: 16px;
-`
-
 const AddDriverBtn = styled(Button)`
     height: auto;
 `
 
 function ContentHeader(props) {
+    const router = useRouter()
     const { onSearch } = props
     const [inputValue, setInputValue] = useState('')
 
-    useEffect(() => {        
-        const driverQuery = JSON.parse(localStorage.getItem(DRIVER_QUERY_STORAGEKEY))
-        if(!isEmpty(driverQuery)) {
-            setInputValue(driverQuery.search || '')
+    useEffect(() => {
+        const currQuery = router.query
+        if(!isEmpty(currQuery)) {
+            setInputValue(currQuery.search || '')
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [router.query])
 
     const isDesktopWidth = useWindowWide(mobileWidth)
 
     return (
-        <HeaderComp2
+        <HeaderComp
             $isDesktopWidth={isDesktopWidth}
         >
             <div>
@@ -116,38 +97,8 @@ function ContentHeader(props) {
                     Tambah Driver <PlusOutlined />
                 </AddDriverBtn>
             </div>
-        </HeaderComp2>
+        </HeaderComp>
     )
-
-    // return (
-    //     <HeaderComp justify='space-between'>
-    //         <Col>
-    //             <div className='title'>DRIVER MANAGEMENT</div>
-    //             <div className='desc'>Data driver yang bekerja dengan anda</div>
-    //         </Col>
-    //         <SearchAddCol>
-    //             <Input
-    //                 allowClear={false}
-    //                 defaultValue={inputValue}
-    //                 placeholder='Cari Driver'
-    //                 onChange={(e) => {
-    //                     onSearch(e.target.value)
-    //                     setInputValue(e.target.value)
-    //                 }}
-    //                 onPressEnter={(e) => {
-    //                     onSearch(e.target.value)
-    //                     setInputValue(e.target.value)
-    //                 }}
-    //                 prefix={<SearchOutlined style={{ color: colors.shipperRed }} />}
-    //                 size='large'
-    //                 value={inputValue}
-    //             />
-    //             <AddDriverBtn type='primary'>
-    //                 Tambah Driver <PlusOutlined />
-    //             </AddDriverBtn>
-    //         </SearchAddCol>
-    //     </HeaderComp>
-    // )
 }
 
 ContentHeader.propTypes = {

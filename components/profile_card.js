@@ -10,13 +10,16 @@ import useWindowWide from '../utility/user-window-wide';
 import { mobileWidth } from '../constants/constants';
 
 const ProfileCardComp = styled.div`
-    min-width: 250px;
+    min-width: 280px;
+    margin: 0 20px;
+    @media (max-width: 768px) {
+        margin: 0;
+    }
     @media (max-width: 425px) {
         min-width: 90%;
     }
     display: inline-block;
     text-align: left;
-    margin: 0 20px;
     background-color: ${colors.shipperWhite}
 `
 
