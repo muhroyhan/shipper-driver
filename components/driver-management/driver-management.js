@@ -150,7 +150,7 @@ function DriverManagement() {
     }
 
     const isDesktopWidth = useWindowWide(mobileWidth)
-    console.log(page)
+    
     return (
         <MainFragment
             $currMobWidth={mobileWidth}
@@ -174,6 +174,7 @@ function DriverManagement() {
             >
                 <Space size='large'>
                     <Button
+                        className='prev-button'
                         disabled={page === 1} 
                         type='text' 
                         onClick={() => handleChangePage(page === 1 ? 1 : page - 1)}
@@ -181,6 +182,7 @@ function DriverManagement() {
                         <LeftOutlined/> Previous Page
                     </Button>
                     <Button
+                        className='next-button'
                         disabled={page === maxPage} 
                         type='text'
                         onClick={() => handleChangePage(page + 1)}
