@@ -1,8 +1,14 @@
 ## Getting Started
 
 - use Node 16.17.0
-- use PNPM as package manager, install first with "npm i -g pnpm" or "yarn id -g pnpm"
+- use PNPM as package manager, install first with "npm install -g pnpm" or "yarn install -g pnpm"
 - run app with command "pnpm dev"
+
+## Project Initiation
+
+    1) Run "pnpm i" to install all dependencies to run this project
+    2) Run "pnpm dev" to run the app server
+    3) Go to any browser and browse "localhost:3000" to show the app
 
 ## Unit Testing Step
 
