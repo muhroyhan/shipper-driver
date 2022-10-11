@@ -1,7 +1,7 @@
 ## Getting Started
 
 - use Node 16.17.0
-- use PNPM as package manager
+- use PNPM as package manager, install first with "npm i -g pnpm" or "yarn id -g pnpm"
 - run app with command "pnpm dev"
 
 ## Unit Testing Step
