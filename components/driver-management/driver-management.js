@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import styled from 'styled-components'
-import colors from '../constants/colors'
-import { drop, filter, includes, isEmpty, map, size, slice, take, toLower } from 'lodash'
-import ProfileCard from './profile_card'
+import colors from '../../constants/colors'
+import { drop, filter, includes, isEmpty, map, size, slice, toLower } from 'lodash'
+import ProfileCard from '../profile_card'
 import ScrollContainer from 'react-indiana-drag-scroll'
 import { Col, Button, Space } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
-import { DRIVER_QUERY_STORAGEKEY } from '../constants/constants'
-import ContentHeader from './content-header'
+import { DRIVER_QUERY_STORAGEKEY } from '../../constants/constants'
+import DriverHeader from './driver-header'
 
 const ScrollComp = styled(ScrollContainer)`
     background-color: ${colors.shipperBackGrey};
@@ -21,13 +21,6 @@ const ScrollComp = styled(ScrollContainer)`
         cursor: grabbing;
     }
 `
-  
-const ContentComp = styled.div`
-    height: 90vh;
-    vertical-align: middle;
-    padding-top: 10px;
-    background-color: ${colors.shipperBackGrey};
-`
 
 const SwitchPageComp = styled.div`
     text-align: center;
@@ -38,22 +31,7 @@ const SwitchPageComp = styled.div`
     }
 `
 
-const AddDriverBtn = styled(Button)`
-    color: ${colors.shipperWhite};
-    border-color: ${colors.shipperRed};
-    background-color: ${colors.shipperRed};
-    height: auto;
-`
-
-const SearchAddCol = styled(Col)`
-    display: flex;
-    padding: 8px 0;
-    gap: 10px;
-    align-items: stretch;
-    font-size: 16px;
-`
-
-function Content() {
+function DriverManagement() {
     const pageSize = 5
     const router = useRouter()
     const [page, setPage] = useState(0)
@@ -145,8 +123,8 @@ function Content() {
     }
     
     return (
-        <ContentComp>
-            <ContentHeader
+        <Fragment>
+            <DriverHeader
                 onSearch={handleSearchDriver}
             />
             <ScrollComp>
@@ -170,8 +148,8 @@ function Content() {
                     </Button>
                 </Space>
             </SwitchPageComp>
-        </ContentComp>
+        </Fragment>
     )
 }
 
-export default Content
+export default DriverManagement

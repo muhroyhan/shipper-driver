@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import colors from '../constants/colors'
+import colors from '../../constants/colors'
 import PropTypes from 'prop-types'
 import { Col, Row, Button, Input } from 'antd'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
-import { DRIVER_QUERY_STORAGEKEY } from '../constants/constants'
+import { DRIVER_QUERY_STORAGEKEY } from '../../constants/constants'
 import { isEmpty } from 'lodash'
 
 const HeaderComp = styled(Row)`
     background-color: ${colors.shipperWhite};
     margin: 20px 40px;
     padding: 10px 20px;
+    height: 10vh;
 
     .title {
-        font-size: 25px;
+        font-size: 3vh;
         color: ${colors.shipperRed};
         font-weight: bold;
     }
@@ -28,15 +29,7 @@ const SearchAddCol = styled(Col)`
 `
 
 const AddDriverBtn = styled(Button)`
-    color: ${colors.shipperWhite};
-    border-color: ${colors.shipperRed};
-    background-color: ${colors.shipperRed};
     height: auto;
-
-    :hover, :focus, :active {
-        color: ${colors.shipperRed};
-        border-color: ${colors.shipperRed};
-    }
 `
 
 function ContentHeader(props) {
@@ -74,7 +67,7 @@ function ContentHeader(props) {
                     size='large'
                     value={inputValue}
                 />
-                <AddDriverBtn>
+                <AddDriverBtn type='primary'>
                     Tambah Driver <PlusOutlined />
                 </AddDriverBtn>
             </SearchAddCol>
