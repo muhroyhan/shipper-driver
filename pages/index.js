@@ -14,18 +14,26 @@ import MobileDrawer from '../components/mobile-drawer'
 const HomeComp = styled.div`
   height: 100%;
   width: 100%;
+  background-color: ${colors.shipperBackGrey}
 `
 
 const ShipperTabs = styled(Tabs)`
-    height: 90vh;
     .ant-tabs-left > .ant-tabs-content-holder, 
     .ant-tabs-left > div > .ant-tabs-content-holder {
         margin: 0;
         border: none;
     }
 
+    .ant-tabs-tabpane {
+      padding: 0 !important;
+    }
+
+    .ant-tabs-nav {
+      background-color: ${colors.shipperWhite};
+    }
+
     .ant-tabs-content-holder {
-        background-color: ${colors.shipperBackGrey}
+        background-color: ${colors.shipperBackGrey};
     }
 
     .ant-tabs-ink-bar {

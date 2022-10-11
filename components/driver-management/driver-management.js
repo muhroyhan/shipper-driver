@@ -14,7 +14,6 @@ import useWindowWide from '../../utility/user-window-wide'
 const ScrollComp = styled(ScrollContainer)`
     background-color: ${colors.shipperBackGrey};
     white-space: nowrap;
-    padding: 0 20px;
     padding-bottom: 20px;
     cursor: grab;
 
@@ -25,6 +24,7 @@ const ScrollComp = styled(ScrollContainer)`
 
 const SwitchPageComp = styled.div`
     text-align: center;
+    padding-bottom: 20px;
 
     .ant-btn{
         background: transparent;

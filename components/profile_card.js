@@ -6,8 +6,14 @@ import colors from '../constants/colors';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { Space, Col, Row } from 'antd';
 import moment from 'moment';
+import useWindowWide from '../utility/user-window-wide';
+import { mobileWidth } from '../constants/constants';
 
 const ProfileCardComp = styled.div`
+    min-width: 250px;
+    @media (max-width: 425px) {
+        min-width: 90%;
+    }
     display: inline-block;
     text-align: left;
     margin: 0 20px;
@@ -57,8 +63,12 @@ const ProfileCard = (props) => {
     const { profile } = props
     const { id = {}, name = {}, picture = {}, dob = {} } = profile
 
+    const isDesktopWidth = useWindowWide(mobileWidth)
+
     return (
-        <ProfileCardComp>
+        <ProfileCardComp
+            $isDesktopWidth={isDesktopWidth}
+        >
             <DriverIdSec justify='space-between'>
                 <Col>
                     Driver ID: <span className='driver-id'>{id.value}</span>
