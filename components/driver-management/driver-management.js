@@ -7,8 +7,9 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import { Col, Button, Space } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useRouter } from 'next/router'
-import { DRIVER_QUERY_STORAGEKEY } from '../../constants/constants'
+import { DRIVER_QUERY_STORAGEKEY, mobileWidth } from '../../constants/constants'
 import DriverHeader from './driver-header'
+import useWindowWide from '../../utility/user-window-wide'
 
 const ScrollComp = styled(ScrollContainer)`
     background-color: ${colors.shipperBackGrey};
@@ -121,15 +122,22 @@ function DriverManagement() {
     const handleSearchDriver = (value) => {
         setSearch(value)
     }
+
+    const isDesktopWidth = useWindowWide(mobileWidth)
     
     return (
         <Fragment>
             <DriverHeader
                 onSearch={handleSearchDriver}
             />
-            <ScrollComp>
-                {map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)}
-            </ScrollComp>
+            {isDesktopWidth &&
+                <ScrollComp>
+                    {map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)}
+                </ScrollComp>
+            }
+            {!isDesktopWidth &&
+                map(showedDrivers, (driver, key) => <ProfileCard key={key} profile={driver}/>)
+            }
             <SwitchPageComp size='large'>
                 <Space size='large'>
                     <Button

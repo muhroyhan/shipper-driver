@@ -6,6 +6,7 @@ specifiers:
   babel-plugin-import: ^1.13.5
   eslint: 8.25.0
   eslint-config-next: 12.3.1
+  hamburger-react: ^2.5.0
   lodash: ^4.17.21
   moment: ^2.29.4
   next: 12.3.1
@@ -24,6 +25,7 @@ specifiers:
 dependencies:
   '@babel/core': 7.19.3
   antd: 4.23.4_biqbaboplfbrettd7655fr4n2y
+  hamburger-react: 2.5.0_react@18.2.0
   lodash: 4.17.21
   moment: 2.29.4
   next: 12.3.1_6tziyx3dehkoeijunclpkpolha
@@ -1905,6 +1907,14 @@ packages:
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
+
+  /hamburger-react/2.5.0_react@18.2.0:
+    resolution: {integrity: sha512-5GSXe+ucxTPJ0SkhIsPQ/PRDweZPIKya1lfahAuExx31SdheeUA4uOPfQIAirbKona8hvo79VDr5LJQzPXsdpw==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /has-bigints/1.0.2:
     resolution: {integrity: sha512-tSvCKtBr9lkF0Ex0aQiP9N+OpV4zi2r/Nee5VkRDbaqv35RLYMzbwQfFSZZH0kR+Rd6302UJZ2p/bJCEoR3VoQ==}

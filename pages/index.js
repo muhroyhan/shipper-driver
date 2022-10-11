@@ -1,23 +1,19 @@
 import Head from 'next/head'
 import Header from '../components/header'
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Tabs } from 'antd'
 import { map } from 'lodash'
-import { menuTabs } from '../constants/constants'
+import { menuTabs, mobileWidth, SECOND_PAGE_PATH } from '../constants/constants'
 import colors from '../constants/colors'
+import useWindowWide from '../utility/user-window-wide'
+import { TabListDiv } from '../styles/global.styled-components'
+import MobileContent from '../components/mobile-content'
+import MobileDrawer from '../components/mobile-drawer'
 
 const HomeComp = styled.div`
   height: 100%;
-`
-
-const MenuComp = styled.div`
-    width: 100%;
-    text-align: left;
-
-    span {
-        padding-left: 10px;
-    }
+  width: 100%;
 `
 
 const ShipperTabs = styled(Tabs)`
@@ -39,8 +35,11 @@ const ShipperTabs = styled(Tabs)`
     }
 `
 
+
 const Home = () => {
-  const [path, setPath] = useState('/driver-management')
+  const [path, setPath] = useState(SECOND_PAGE_PATH)
+  const [isOpen, setIsOpen] = useState(false)
+
   const handleChangeContent = (newPath) => {
     setPath(newPath)
   }
@@ -48,16 +47,20 @@ const Home = () => {
   const tabItems = () => map(menuTabs(path), tab => {
     return {
       label: (
-          <MenuComp>
+          <TabListDiv>
               {tab.icon}
               <span>{tab.label}</span>
-          </MenuComp>
+          </TabListDiv>
       ),
       key: tab.path,
       children: tab.content,
     }
   })
 
+  const isDesktopWidth = useWindowWide(mobileWidth)
+
+  const handleOpenDrawer = (drawerStatus) => setIsOpen(drawerStatus)
+  
   return (
     <HomeComp>
       <Head>
@@ -65,13 +68,24 @@ const Home = () => {
         <meta name="description" content="Welcome to Shipper Drivers" />
         <link rel="icon" href="/shipper-icon.png" />
       </Head>
-      <Header/>
-      <ShipperTabs
-        defaultActiveKey={path}
-        tabPosition='left'
-        onTabClick={(val, e) => handleChangeContent(val)}
-        items={tabItems()}
+      <Header
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
       />
+      {!isDesktopWidth &&
+          <MobileDrawer path={path} isOpen={isOpen} setIsOpen={setIsOpen}/>
+      }
+      {!isDesktopWidth &&
+          <MobileContent path={path} />
+      }
+      {isDesktopWidth &&
+          <ShipperTabs
+            defaultActiveKey={path}
+            tabPosition='left'
+            onTabClick={(val, e) => handleChangeContent(val)}
+            items={tabItems()}
+          />
+      }
     </HomeComp>
   )
 }
