@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "pnpm lint && pnpm build && next start",
+    "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open",
     "cypress:headless": "cypress run",
